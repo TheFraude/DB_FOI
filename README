@@ -1,99 +1,123 @@
-# Database Model Diagram :
+To make your database design easier to read and structured, I'll add clear titles and format your SQL code. Here's a cleaned-up version of the database model, including the diagrams you described:
 
-## Online store
+# **Database Model for Online Store**
 
-c:\Users\hamza\OneDrive\Pictures\Captures d’écran\Capture d'écran 2024-09-17 183818.png
+## **Description**
+This database design supports a generic online store, where users can search and buy products. Products are categorized by type and linked to suppliers and companies that sell them. The structure ensures relationships between customers, purchases, suppliers, and products.
 
+## **Tables and SQL Code**
 
-To summarize, an online store is all around it product, we all have been once on one that sells, cloths, electronics, food, etc.. And what is all they have in common ? the same organisation . The user goes more and more specific at a point where only the product that are in the range of what the user wanted can appear and here we are talking about only the type of product it is , and before that, the category of product.
+### **1. Company**
 
-At the end the “category” is not a tables that need to be because like you can see on the Diagram,  the customer can skip a step and go to the product he want. 
-
-## The code of the tables :
-
-### Company
+Represents companies that produce or distribute products.
 
 ```sql
 CREATE TABLE Company(
-	ID integer PRIMARY KEY,
-	NAME varchar(25),
-	HQ varchar(100),
-	url varchar(300)
-)
+	ID INTEGER PRIMARY KEY,
+	NAME VARCHAR(25),
+	HQ VARCHAR(100),
+	URL VARCHAR(300)
+);
 ```
 
-### Customer
+### **2. Customer**
+
+Stores customer data, ensuring unique email addresses to identify users.
 
 ```sql
-create table Customer ( --User is key word reserved in postreSQL 
-	EMAIL varchar(40) PRIMARY KEY,
-	NAME varchar(30),
-	PHONE varchar(14),
-	ADDRESS varchar(200)
-)
+CREATE TABLE Customer (
+	EMAIL VARCHAR(40) PRIMARY KEY,
+	NAME VARCHAR(30),
+	PHONE VARCHAR(14),
+	ADDRESS VARCHAR(200)
+);
 ```
 
-### Category
+### **3. Category**
+
+Defines broad product categories, such as "Clothing," "Electronics," etc.
 
 ```sql
 CREATE TABLE Category(
-	CATEGORYID integer PRIMARY KEY,
-	NAME varchar(20),
-	DESCRIPTION text
-)
+	CATEGORYID INTEGER PRIMARY KEY,
+	NAME VARCHAR(20),
+	DESCRIPTION TEXT
+);
 ```
 
-### Product
+### **4. Product**
+
+Stores individual product details, including price, stock, and category. Each product is linked to its company, type, and category.
 
 ```sql
 CREATE TABLE Product(
-	PRODUCTID integer PRIMARY KEY,
-	NAME varchar(100) not null, --to oblige this input fill out
-	PRICE float not null, -- no free product, is this charity ?
-	INSTOCK integer not null default 0, --can have 0 stock if the part isn't fill out
-	CATEGORYID integer,
-	TYPEID integer,
-	COMPANYID integer,
+	PRODUCTID INTEGER PRIMARY KEY,
+	NAME VARCHAR(100) NOT NULL,  -- Mandatory field
+	PRICE FLOAT NOT NULL,        -- Mandatory field, no free products
+	INSTOCK INTEGER NOT NULL DEFAULT 0,  -- Default stock set to 0
+	CATEGORYID INTEGER,
+	TYPEID INTEGER,
+	COMPANYID INTEGER,
 	FOREIGN KEY (CATEGORYID) REFERENCES Category(CATEGORYID),
- 	FOREIGN KEY (TYPEID) REFERENCES TypeOfProduct(TYPEID),
+	FOREIGN KEY (TYPEID) REFERENCES TypeOfProduct(TYPEID),
 	FOREIGN KEY (COMPANYID) REFERENCES Company(ID)
-	
-)
+);
 ```
 
-### Purchase
+### **5. Purchase**
+
+Tracks customer purchases, linking customers and products. Also records the purchase date and quantity.
 
 ```sql
 CREATE TABLE Purchase(
-	PURCHASEID integer PRIMARY KEY,
-	EMAIL varchar,
-	PRODUCTID integer,
-	PUCHASEDATE date not null,
-	HOWMANY integer not null,
+	PURCHASEID INTEGER PRIMARY KEY,
+	EMAIL VARCHAR(40),
+	PRODUCTID INTEGER,
+	PURCHASEDATE DATE NOT NULL,  -- Ensures date is filled in
+	HOWMANY INTEGER NOT NULL,    -- Specifies quantity purchased
 	FOREIGN KEY (EMAIL) REFERENCES Customer(EMAIL),
 	FOREIGN KEY (PRODUCTID) REFERENCES Product(PRODUCTID)
-)
+);
 ```
 
-### Suplier (*Supplier)
+### **6. Supplier**
+
+Tracks suppliers providing products. Suppliers are linked to products they supply.
 
 ```sql
-create table Suplier(
-	SupplierID INTEGER PRIMARY KEY,
-    	Name VARCHAR(100) NOT NULL,
-    	ContactInfo VARCHAR(100),
-    	ProductID INTEGER, --link to the porduct because it can be the same product but the not same supplier :0
-    	FOREIGN KEY (ProductID) REFERENCES Product(ProductID)
-)
+CREATE TABLE Supplier(
+	SUPPLIERID INTEGER PRIMARY KEY,
+	NAME VARCHAR(100) NOT NULL,  -- Supplier name must be provided
+	CONTACTINFO VARCHAR(100),
+	PRODUCTID INTEGER,  -- Links each supplier to specific products
+	FOREIGN KEY (PRODUCTID) REFERENCES Product(PRODUCTID)
+);
 ```
 
-### TypeOfProduct
+### **7. TypeOfProduct**
+
+Defines product types within a category. For example, "Smartphones" in the "Electronics" category.
 
 ```sql
 CREATE TABLE TypeOfProduct(
-	TYPEID integer PRIMARY KEY,
-	TNAME varchar(20),
-	CATEGORYID integer,
+	TYPEID INTEGER PRIMARY KEY,
+	TNAME VARCHAR(20),
+	CATEGORYID INTEGER,
 	FOREIGN KEY (CATEGORYID) REFERENCES Category(CATEGORYID)
-)
+);
 ```
+
+---
+
+### **General Structure Overview:**
+
+1. **Company** produces/distributes **Products**.
+2. **Customers** make **Purchases**.
+3. **Products** are categorized by **Category** and **TypeOfProduct**.
+4. **Suppliers** provide **Products**.
+
+The design ensures all relationships are clearly defined and interconnected, enhancing database efficiency and integrity.
+
+---
+
+Let me know if you'd like further changes or additions!
