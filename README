@@ -1,0 +1,98 @@
+# Database Model Diagram :
+
+## Online store
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/20855acd-1112-45c1-8b4d-e8c3ad2a1108/0345e865-e2b4-4d94-8deb-ac73303bd356/image.png)
+
+To summarize, an online store is all around it product, we all have been once on one that sells, cloths, electronics, food, etc.. And what is all they have in common ? the same organisation . The user goes more and more specific at a point where only the product that are in the range of what the user wanted can appear and here we are talking about only the type of product it is , and before that, the category of product.
+
+At the end the “category” is not a tables that need to be because like you can see on the Diagram,  the customer can skip a step and go to the product he want. 
+
+## The code of the tables :
+
+### Company
+
+```sql
+CREATE TABLE Company(
+	ID integer PRIMARY KEY,
+	NAME varchar(25),
+	HQ varchar(100),
+	url varchar(300)
+)
+```
+
+### Customer
+
+```sql
+create table Customer ( --User is key word reserved in postreSQL 
+	EMAIL varchar(40) PRIMARY KEY,
+	NAME varchar(30),
+	PHONE varchar(14),
+	ADDRESS varchar(200)
+)
+```
+
+### Category
+
+```sql
+CREATE TABLE Category(
+	CATEGORYID integer PRIMARY KEY,
+	NAME varchar(20),
+	DESCRIPTION text
+)
+```
+
+### Product
+
+```sql
+CREATE TABLE Product(
+	PRODUCTID integer PRIMARY KEY,
+	NAME varchar(100) not null, --to oblige this input fill out
+	PRICE float not null, -- no free product, is this charity ?
+	INSTOCK integer not null default 0, --can have 0 stock if the part isn't fill out
+	CATEGORYID integer,
+	TYPEID integer,
+	COMPANYID integer,
+	FOREIGN KEY (CATEGORYID) REFERENCES Category(CATEGORYID),
+ 	FOREIGN KEY (TYPEID) REFERENCES TypeOfProduct(TYPEID),
+	FOREIGN KEY (COMPANYID) REFERENCES Company(ID)
+	
+)
+```
+
+### Purchase
+
+```sql
+CREATE TABLE Purchase(
+	PURCHASEID integer PRIMARY KEY,
+	EMAIL varchar,
+	PRODUCTID integer,
+	PUCHASEDATE date not null,
+	HOWMANY integer not null,
+	FOREIGN KEY (EMAIL) REFERENCES Customer(EMAIL),
+	FOREIGN KEY (PRODUCTID) REFERENCES Product(PRODUCTID)
+)
+```
+
+### Suplier (*Supplier)
+
+```sql
+create table Suplier(
+	SupplierID INTEGER PRIMARY KEY,
+    	Name VARCHAR(100) NOT NULL,
+    	ContactInfo VARCHAR(100),
+    	ProductID INTEGER, --link to the porduct because it can be the same product but the not same supplier :0
+    	FOREIGN KEY (ProductID) REFERENCES Product(ProductID)
+)
+```
+
+### TypeOfProduct
+
+```sql
+CREATE TABLE TypeOfProduct(
+	TYPEID integer PRIMARY KEY,
+	TNAME varchar(20),
+	CATEGORYID integer,
+	FOREIGN KEY (CATEGORYID) REFERENCES Category(CATEGORYID)
+)
+```
