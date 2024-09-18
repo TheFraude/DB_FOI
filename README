@@ -187,14 +187,3 @@ Here are some SQL queries used to analyze the data in the store:
        WHERE p.categoryid = product.categoryid
    );
    ```
-
----
-
-### **Conclusion**
-This project demonstrates how a well-structured relational database can be designed for an online store. It covers everything from the definition of entities (e.g., customers, products, companies) to how relationships between these entities can be leveraged to provide valuable insights about the business.
-
-By using SQL, this database ensures efficient data storage, retrieval, and management, helping manage critical functions such as tracking purchases, monitoring stock levels, and analyzing customer behavior.
-
----
-
-Let me know if you need more adjustments or any further explanation!
