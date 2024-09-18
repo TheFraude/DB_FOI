@@ -7,6 +7,39 @@ This project involves the design and implementation of a relational database for
 
 ---
 
+Database Structure Overview
+
+The diagram illustrates the relational structure of the database, where each table stores specific types of data related to the store’s operations. The relationships between the tables are represented by lines connecting them, with primary keys and foreign keys enforcing integrity constraints. Here's an overview of the structure:
+
+    Customer Table
+        Stores customer details such as email (primary key), name, phone, and address.
+        Linked to the Purchase table via the EMAIL foreign key.
+
+    Purchase Table
+        Tracks the details of each purchase, including the purchase ID (primary key), customer email (foreign key from Customer), product ID (foreign key from Product), the date of the purchase, and the number of items bought.
+        Establishes relationships between the customer and the products they purchase.
+
+    Supplier Table
+        Contains supplier information such as supplier ID (primary key), name, contact info, and the product ID (foreign key from Product).
+        Links suppliers to the products they provide.
+
+    Product Table
+        Manages product data such as product ID (primary key), name, price, stock quantity, category ID (foreign key from Category), type ID (foreign key from TypeOfProduct), and company ID (foreign key from Company).
+        Central to many relationships in the database, connecting categories, types, suppliers, and companies.
+
+    Company Table
+        Stores company data with fields such as company ID (primary key), name, headquarters (HQ), and URL.
+        Linked to the Product table to represent the company manufacturing the products.
+
+    Category Table
+        Defines product categories with fields such as category ID (primary key), name, and description.
+        Linked to the Product and TypeOfProduct tables.
+
+    TypeOfProduct Table
+        Classifies products into specific types under each category, with fields such as type ID (primary key), type name, and category ID (foreign key from Category).
+        
+---
+
 ### **Tables in the Database**
 The database consists of the following tables:
 
