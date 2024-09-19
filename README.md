@@ -189,3 +189,8 @@ Here are some SQL queries used to analyze the data in the store:
        WHERE p.categoryid = product.categoryid
    );
    ```
+---
+
+## **Learn R Programming Language:**
+
+https://www.w3schools.com/r/default.asp
