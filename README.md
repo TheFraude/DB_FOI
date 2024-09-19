@@ -151,6 +151,7 @@ Here are some SQL queries used to analyze the data in the store:
        WHERE name = 'Electronics'
    );
    ```
+https://stackoverflow.com/questions/9574721/using-sum-in-an-sql-query
 
 2. **Which companies make multiple types of products?**
    ```sql
@@ -161,6 +162,7 @@ Here are some SQL queries used to analyze the data in the store:
    GROUP BY company.name
    HAVING COUNT(DISTINCT typeofproduct.typeid) > 1;
    ```
+https://stackoverflow.com/questions/6138518/count-in-sql
 
 3. **List of customers who purchased a specific product (e.g., iPhone 13):**
    ```sql
