@@ -10,7 +10,7 @@ This project involves the design and implementation of a relational database for
 ### **Tables in the Database**
 The database consists of the following tables:
 
-![Database Diagram](DiagraDB.png)
+![Database Diagram](DiagramDB.png)
 
 1. **Customer**: Stores information about the store's customers.
 2. **Company**: Contains data about companies that manufacture products.
